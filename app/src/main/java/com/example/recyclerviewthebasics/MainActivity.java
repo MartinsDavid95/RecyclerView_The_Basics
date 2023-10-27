@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView rvVertical;
+    private RecyclerView rvVertical,rvHorizontal;
     private String[] interns, descriptions;
     int[] avatars = {
             R.drawable.stagiaire_01,
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void init(){
+        rvHorizontal = findViewById(R.id.rv_horizontal);
         rvVertical = findViewById(R.id.rv_vertical);
         interns = getResources().getStringArray(R.array.interns);
         descriptions = getResources().getStringArray(R.array.descriptions);
@@ -38,12 +39,19 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         rvVertical.setLayoutManager(linearLayoutManager);
     }
+    private void fillRecyclerHorizontal(){
+        MyRecyclerHorizontalAdapter adapter = new MyRecyclerHorizontalAdapter(this,interns,avatars);
+        rvHorizontal.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        rvHorizontal.setLayoutManager(linearLayoutManager);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        fillRecyclerHorizontal();
         fillRecyclerVertical();
     }
 }
