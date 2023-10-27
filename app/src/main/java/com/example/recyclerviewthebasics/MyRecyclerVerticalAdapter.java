@@ -1,6 +1,7 @@
 package com.example.recyclerviewthebasics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecyclerVerticalAdapter extends RecyclerView.Adapter<MyRecyclerVerticalAdapter.MyViewHolder> {
@@ -39,6 +41,16 @@ public class MyRecyclerVerticalAdapter extends RecyclerView.Adapter<MyRecyclerVe
         holder.tvTitre.setText(interns[position]);
         holder.tvDescription.setText(descriptions[position]);
         holder.ivAvatar.setImageResource(avatars[position]);
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("intern",interns[position]);
+                intent.putExtra("description",descriptions[position]);
+                intent.putExtra("avatar",avatars[position]);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -48,13 +60,15 @@ public class MyRecyclerVerticalAdapter extends RecyclerView.Adapter<MyRecyclerVe
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivAvatar;
-        TextView tvTitre, tvDescription;
+        private ImageView ivAvatar;
+        private TextView tvTitre, tvDescription;
+        private ConstraintLayout mainLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ivAvatar = itemView.findViewById(R.id.iv_avatar);
             tvTitre = itemView.findViewById(R.id.tv_titre);
             tvDescription = itemView.findViewById(R.id.tv_description);
+            mainLayout = itemView.findViewById(R.id.main_layout);
         }
     }
 }

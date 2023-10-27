@@ -1,6 +1,7 @@
 package com.example.recyclerviewthebasics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecyclerHorizontalAdapter extends RecyclerView.Adapter<MyRecyclerHorizontalAdapter.MyViewHolder>{
@@ -36,6 +38,14 @@ public class MyRecyclerHorizontalAdapter extends RecyclerView.Adapter<MyRecycler
     public void onBindViewHolder(@NonNull MyRecyclerHorizontalAdapter.MyViewHolder holder, int position) {
         holder.tvTitre1.setText(interns[position]);
         holder.ivAvatar1.setImageResource(avatars[position]);
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("intern",interns[position]);
+                intent.putExtra("avatar",avatars[position]);
+            }
+        });
     }
 
     @Override
@@ -44,12 +54,14 @@ public class MyRecyclerHorizontalAdapter extends RecyclerView.Adapter<MyRecycler
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivAvatar1;
-        TextView tvTitre1;
+        private ImageView ivAvatar1;
+        private TextView tvTitre1;
+        private ConstraintLayout mainLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ivAvatar1 = itemView.findViewById(R.id.iv_avatar1);
             tvTitre1 = itemView.findViewById(R.id.tv_titre1);
+            mainLayout = itemView.findViewById(R.id.main_layout);
         }
     }
 }
